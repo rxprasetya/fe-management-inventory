@@ -76,10 +76,10 @@ const WarehouseForm = () => {
                                     name="name"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel htmlFor="name">Name <span className="text-destructive">*</span></FormLabel>
+                                            <FormLabel htmlFor={field.name}>Name <span className="text-destructive">*</span></FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    id="name"
+                                                    id={field.name}
                                                     placeholder="Add name"
                                                     type="text"
                                                     autoComplete="off"
@@ -95,10 +95,10 @@ const WarehouseForm = () => {
                                     name="location"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel htmlFor="location">Location <span className="text-destructive">*</span></FormLabel>
+                                            <FormLabel htmlFor={field.name}>Location <span className="text-destructive">*</span></FormLabel>
                                             <FormControl>
                                                 <Textarea
-                                                    id="location"
+                                                    id={field.name}
                                                     placeholder="Add location"
                                                     className="resize-none"
                                                     {...field}

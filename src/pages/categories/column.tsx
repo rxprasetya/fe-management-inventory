@@ -1,4 +1,5 @@
 import DataTableActionButton from "@/components/layout/datatable/data-table-action-button"
+import { DataTableColumnHeader } from "@/components/layout/datatable/data-table-column-header"
 import DataTableSelectAll from "@/components/layout/datatable/data-table-select-all"
 import DataTableSelectRow from "@/components/layout/datatable/data-table-select-row"
 import type { Category } from "@/features/category/category.schema"
@@ -18,12 +19,23 @@ export const CategoryColumns: ColumnDef<Category>[] = [
         enableHiding: false,
     },
     {
-        header: "No",
-        cell: (row) => row.row.index + 1,
+        id: "No",
+        header: ({ column }) => {
+            return (
+                <DataTableColumnHeader column={column} title="No" />
+            )
+        },
+        accessorFn: (row, index) => index + 1,
+        cell: ({ getValue }) => getValue(),
     },
     {
+        id: "name",
         accessorKey: "name",
-        header: "Name",
+        header: ({ column }) => {
+            return (
+                <DataTableColumnHeader column={column} title="Name" />
+            )
+        }
     },
     {
         id: "actions",

@@ -1,10 +1,13 @@
+import FadeAnimate from "@/components/common/fade-animate"
 import PageAlert from "@/components/common/page-alert"
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { useAppMutation } from "@/lib/react-query"
 import { useResponseMessageStore } from "@/store/use-store"
 import type { ApiError, ApiResponse } from "@/types/api"
 import { MoreHorizontal, Trash2 } from "lucide-react"
+import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 
 const DataTableActionButton = <TData,>({
@@ -15,9 +18,12 @@ const DataTableActionButton = <TData,>({
 }: {
     id: string
     mutationFn: (id: string) => Promise<ApiResponse<TData>>
-    redirectTo: string
+    redirectTo?: string
     queryKey?: string[]
 }) => {
+
+    const [open, setOpen] = useState<boolean>(false)
+
     const { setResponseMessage } = useResponseMessageStore()
 
     const navigate = useNavigate()
@@ -53,10 +59,12 @@ const DataTableActionButton = <TData,>({
                 <DropdownMenuContent>
                     <DropdownMenuLabel>Actions</DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={() => navigate(redirectTo)}>
-                        Update
-                    </DropdownMenuItem>
-                    <DropdownMenuItem className="text-destructive" onClick={() => mutate(id)}>
+                    {redirectTo &&
+                        <DropdownMenuItem onClick={() => navigate(redirectTo)}>
+                            Update
+                        </DropdownMenuItem>
+                    }
+                    <DropdownMenuItem variant='destructive' onClick={() => setOpen(prev => !prev)}>
                         Delete
                         <DropdownMenuShortcut>
                             <Trash2 className="text-destructive size-3.5" />
@@ -64,6 +72,23 @@ const DataTableActionButton = <TData,>({
                     </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>
+
+            <AlertDialog open={open} onOpenChange={setOpen}>
+                <AlertDialogContent>
+                    <FadeAnimate className="flex flex-col gap-4">
+                        <AlertDialogHeader>
+                            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                            <AlertDialogDescription>
+                                This action cannot be undone. This will permanently delete and remove your data from our servers.
+                            </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction onClick={() => mutate(id)}>Continue</AlertDialogAction>
+                        </AlertDialogFooter>
+                    </FadeAnimate>
+                </AlertDialogContent>
+            </AlertDialog>
         </>
     )
 }

@@ -50,7 +50,6 @@ const Warehouses = () => {
                             <DataTable
                                 data={warehouses}
                                 columns={WarehouseColumns}
-                                filter="name"
                                 nav="/warehouses/form"
                             />
                     }

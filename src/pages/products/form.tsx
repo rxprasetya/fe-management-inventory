@@ -116,10 +116,10 @@ const ProductForm = () => {
                                     name="name"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel htmlFor="name">Name <span className="text-destructive">*</span></FormLabel>
+                                            <FormLabel htmlFor={field.name}>Name <span className="text-destructive">*</span></FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    id="name"
+                                                    id={field.name}
                                                     placeholder="Add name"
                                                     type="text"
                                                     {...field}
@@ -135,10 +135,10 @@ const ProductForm = () => {
                                     name="categoryID"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel htmlFor="categoryID">Category <span className="text-destructive">*</span></FormLabel>
+                                            <FormLabel htmlFor={field.name}>Category <span className="text-destructive">*</span></FormLabel>
                                             <Select value={field.value} onValueChange={field.onChange}>
                                                 <FormControl>
-                                                    <SelectTrigger id="categoryID">
+                                                    <SelectTrigger id={field.name}>
                                                         <SelectValue placeholder="Select a category" />
                                                     </SelectTrigger>
                                                 </FormControl>
@@ -159,10 +159,10 @@ const ProductForm = () => {
                                     name="unit"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel htmlFor="unit">Unit <span className="text-destructive">*</span></FormLabel>
+                                            <FormLabel htmlFor={field.name}>Unit <span className="text-destructive">*</span></FormLabel>
                                             <Select value={field.value} onValueChange={field.onChange}>
                                                 <FormControl>
-                                                    <SelectTrigger id="unit">
+                                                    <SelectTrigger id={field.name}>
                                                         <SelectValue placeholder="Select a unit" />
                                                     </SelectTrigger>
                                                 </FormControl>
@@ -183,10 +183,10 @@ const ProductForm = () => {
                                     name="description"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel htmlFor="description">Description</FormLabel>
+                                            <FormLabel htmlFor={field.name}>Description</FormLabel>
                                             <FormControl>
                                                 <Textarea
-                                                    id="description"
+                                                    id={field.name}
                                                     placeholder="Add description"
                                                     className="resize-none"
                                                     {...field}
@@ -203,9 +203,10 @@ const ProductForm = () => {
                                     name="minStock"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel>Min. Stock <span className="text-destructive">*</span></FormLabel>
+                                            <FormLabel htmlFor={field.name}>Min. Stock <span className="text-destructive">*</span></FormLabel>
                                             <FormControl>
                                                 <Input
+                                                    id={field.name}
                                                     placeholder="Add min. stock"
                                                     type="number"
                                                     min={0}

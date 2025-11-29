@@ -19,14 +19,26 @@ export const ProductColumns: ColumnDef<Product>[] = [
         enableHiding: false,
     },
     {
-        header: "No",
-        cell: (row) => row.row.index + 1
+        id: "No",
+        header: ({ column }) => {
+            return (
+                <DataTableColumnHeader column={column} title="No" />
+            )
+        },
+        accessorFn: (row, index) => index + 1,
+        cell: ({ getValue }) => getValue(),
     },
     {
+        id: "name",
         accessorKey: "name",
-        header: "Name",
+        header: ({ column }) => {
+            return (
+                <DataTableColumnHeader column={column} title="Name" />
+            )
+        }
     },
     {
+        id: "categoryName",
         accessorKey: "categoryName",
         header: ({ column }) => {
             return (
@@ -35,8 +47,13 @@ export const ProductColumns: ColumnDef<Product>[] = [
         }
     },
     {
+        id: "unit",
         accessorKey: "unit",
-        header: "Unit",
+        header: ({ column }) => {
+            return (
+                <DataTableColumnHeader column={column} title="Unit" />
+            )
+        }
     },
     {
         id: "actions",

@@ -10,6 +10,7 @@ import { AuthSchema, type Auth } from "../../features/auth/auth.schema"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Button } from "@/components/ui/button"
 import signInImg from "../../assets/images/container.webp"
+import logo from "../../assets/images/logo.webp"
 import { useNavigate } from "react-router-dom"
 import { ThemeProvider } from "@/components/common/theme-provider"
 import PageAlert from "@/components/common/page-alert"
@@ -43,14 +44,9 @@ const Authorization = () => {
             <section className="w-screen h-screen box-border p-4 bg-accent">
                 <div className="container mx-auto bg-background rounded-xl h-full flex items-center shadow-2xl gap-4">
                     <div className="flex-1 flex flex-col box-border px-8 gap-4">
+                        <div className="flex self-center md:hidden w-32 h-16 bg-contain bg-center bg-no-repeat" style={{ backgroundImage: `url(${logo})` }} />
                         <h1 className="text-6xl">Sign In</h1>
-                        <p className="text-muted-foreground text-base">
-                            <span className="text-xl">Log in using the demo credentials below to explore <span className="inline-flex md:hidden text-foreground font-semibold">Simpan.in</span> <span className="hidden md:inline-flex">website.</span></span>
-                            <br />
-                            Username:<span className="text-foreground"> guest</span>
-                            <br />
-                            Password:<span className="text-foreground"> 123123123</span>
-                        </p>
+                        <p className="text-muted-foreground text-xl">Log in using the demo credentials below to explore website.</p>
                         <Form {...form}>
                             <form onSubmit={form.handleSubmit(onSubmit)} className="w-full h-full flex flex-col justify-center gap-8 select-none">
                                 <FormField
@@ -108,8 +104,9 @@ const Authorization = () => {
                     <div className="hidden md:inline-flex flex-2 w-full h-full relative overflow-hidden">
                         <div className=" w-full h-full bg-cover bg-center rounded-tr-xl rounded-br-xl" style={{ backgroundImage: `url(${signInImg})` }} />
                         <div className="absolute inset-0 bg-linear-to-t from-white dark:from-black dark:via-black dark:via-0% to-transparent rounded-br-xl"></div>
+                        <div className="absolute left-6 bottom-30 xl:bottom-24 w-32 h-16 bg-contain bg-no-repeat z-50" style={{ backgroundImage: `url(${logo})` }} />
                         <div className="absolute left-0 bottom-0 mb-16 mx-8 w-1/2 select-none">
-                            <h1 className="text-xl font-semibold">Simpan.in</h1>
+                            {/* <h1 className="text-xl font-semibold">Simpan.in</h1> */}
                             <p>Manage your stock, products, and inventory faster, easier, and more efficiently.</p>
                         </div>
                     </div>

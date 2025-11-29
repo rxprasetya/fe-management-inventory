@@ -20,9 +20,11 @@ import { CalendarIcon } from "lucide-react"
 import { Calendar } from "@/components/ui/calendar"
 import dayjs from "dayjs"
 import type { InventoryProduct, InventoryWarehouse } from "@/features/inventory/inventories.type"
-import { getProductInStocks, getWarehouseInStocks } from "@/features/inventory/inventories.service"
+import { getProductInStocks, getWarehouseInStocksByProductId } from "@/features/inventory/inventories.service"
+import { Skeleton } from "@/components/common/skeleton"
 
 const StockInForm = () => {
+
     const { id } = useParams<{ id: string }>()
 
     const { setResponseMessage } = useResponseMessageStore()
@@ -30,7 +32,7 @@ const StockInForm = () => {
     const form = useForm<StockIn>({
         resolver: zodResolver(StockInSchema),
         defaultValues: {
-            date: new Date().toISOString(),
+            date: new Date(),
             productID: "",
             warehouseID: "",
             quantity: 0,
@@ -44,9 +46,12 @@ const StockInForm = () => {
         queryFn: getProductInStocks
     })
 
+    const productID = form.watch("productID")
+
     const { data: warehouses = [], isLoading: loadWarehouses } = useAppQuery<InventoryWarehouse[]>({
-        queryKey: ["inventories", "warehouses"],
-        queryFn: getWarehouseInStocks
+        queryKey: ["inventories", "warehouses", productID],
+        queryFn: () => getWarehouseInStocksByProductId(productID!),
+        enabled: !!productID
     })
 
     const { data: stockInData = [], isLoading: loadStockIn } = useAppQuery<StockIn[]>({
@@ -60,7 +65,7 @@ const StockInForm = () => {
     useEffect(() => {
         if (id && stockIn)
             form.reset({
-                date: new Date(stockIn.date).toISOString(),
+                date: new Date(stockIn.date),
                 productID: stockIn.productID,
                 warehouseID: stockIn.warehouseID,
                 quantity: stockIn.quantity,
@@ -90,7 +95,7 @@ const StockInForm = () => {
             title="Stock In Form"
             desc="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quas laudantium voluptatibus neque consectetur, animi quis!"
             children={
-                loadProducts || loadWarehouses || loadStockIn ?
+                loadProducts || loadStockIn ?
                     <StockInFormSkeleton />
                     :
                     <>
@@ -102,10 +107,10 @@ const StockInForm = () => {
                                     name="refrenceCode"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel htmlFor="refrenceCode">Refrence Code <span className="text-destructive">*</span></FormLabel>
+                                            <FormLabel htmlFor={field.name}>Refrence Code <span className="text-destructive">*</span></FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    id="refrenceCode"
+                                                    id={field.name}
                                                     placeholder="Add refrence code"
                                                     type="text"
                                                     autoComplete="off"
@@ -121,7 +126,7 @@ const StockInForm = () => {
                                     name="date"
                                     render={({ field }) => (
                                         <FormItem className="flex flex-col">
-                                            <FormLabel>Date <span className="text-destructive">*</span></FormLabel>
+                                            <FormLabel id={field.name}>Date <span className="text-destructive">*</span></FormLabel>
                                             <Popover>
                                                 <PopoverTrigger asChild>
                                                     <FormControl>
@@ -140,9 +145,13 @@ const StockInForm = () => {
                                                 </PopoverTrigger>
                                                 <PopoverContent className="w-auto p-0" align="start">
                                                     <Calendar
+                                                        id={field.name}
                                                         mode="single"
-                                                        selected={new Date(field.value)}
+                                                        selected={field.value}
                                                         onSelect={field.onChange}
+                                                        disabled={(date) =>
+                                                            date < new Date(new Date().setHours(0, 0, 0, 0))
+                                                        }
                                                         autoFocus
                                                     />
                                                 </PopoverContent>
@@ -157,10 +166,10 @@ const StockInForm = () => {
                                     name="productID"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel htmlFor="productID">Product <span className="text-destructive">*</span></FormLabel>
+                                            <FormLabel htmlFor={field.name}>Product <span className="text-destructive">*</span></FormLabel>
                                             <Select value={field.value} onValueChange={field.onChange}>
                                                 <FormControl>
-                                                    <SelectTrigger id="productID">
+                                                    <SelectTrigger id={field.name}>
                                                         <SelectValue placeholder="Select a product" />
                                                     </SelectTrigger>
                                                 </FormControl>
@@ -188,27 +197,36 @@ const StockInForm = () => {
                                     name="warehouseID"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel htmlFor="warehouseID">Warehouse <span className="text-destructive">*</span></FormLabel>
-                                            <Select value={field.value} onValueChange={field.onChange}>
-                                                <FormControl>
-                                                    <SelectTrigger id="warehouseID">
-                                                        <SelectValue placeholder="Select a warehouse" />
-                                                    </SelectTrigger>
-                                                </FormControl>
-                                                <SelectContent>
-                                                    {
-                                                        warehouses.length > 0 ?
-                                                            warehouses.map((warehouse) => (
-                                                                <SelectItem key={warehouse.warehouseID} value={warehouse.warehouseID}>{warehouse.warehouseName}</SelectItem>
-                                                            ))
-                                                            :
-                                                            <div className="p-1 text-sm text-muted-foreground">
-                                                                Oops! No warehouses yet. Add stock data first
-                                                            </div>
-                                                    }
-                                                </SelectContent>
-                                            </Select>
-                                            <FormMessage />
+                                            {loadWarehouses ?
+                                                <div className="space-y-2">
+                                                    <Skeleton className="h-4 w-24" />
+                                                    <Skeleton className="h-8 w-full rounded-lg" />
+                                                </div>
+                                                :
+                                                <>
+                                                    <FormLabel htmlFor={field.name}>Warehouse <span className="text-destructive">*</span></FormLabel>
+                                                    <Select value={field.value} onValueChange={field.onChange} disabled={!productID}>
+                                                        <FormControl>
+                                                            <SelectTrigger id={field.name}>
+                                                                <SelectValue placeholder="Select a warehouse" />
+                                                            </SelectTrigger>
+                                                        </FormControl>
+                                                        <SelectContent>
+                                                            {
+                                                                warehouses.length > 0 ?
+                                                                    warehouses.map((warehouse) => (
+                                                                        <SelectItem key={warehouse.warehouseID} value={warehouse.warehouseID}>{warehouse.warehouseName}</SelectItem>
+                                                                    ))
+                                                                    :
+                                                                    <div className="p-1 text-sm text-muted-foreground">
+                                                                        Oops! No warehouses yet. Add stock data first
+                                                                    </div>
+                                                            }
+                                                        </SelectContent>
+                                                    </Select>
+                                                    <FormMessage />
+                                                </>
+                                            }
                                         </FormItem>
                                     )
                                     }
@@ -219,10 +237,10 @@ const StockInForm = () => {
                                     name="quantity"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel htmlFor="quantity">Quantity <span className="text-destructive">*</span></FormLabel>
+                                            <FormLabel htmlFor={field.name}>Quantity <span className="text-destructive">*</span></FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    id="quantity"
+                                                    id={field.name}
                                                     placeholder="Add quantity"
                                                     type="number"
                                                     min={0}
@@ -241,10 +259,10 @@ const StockInForm = () => {
                                     name="notes"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel htmlFor="notes">Notes</FormLabel>
+                                            <FormLabel htmlFor={field.name}>Notes</FormLabel>
                                             <FormControl>
                                                 <Textarea
-                                                    id="notes"
+                                                    id={field.name}
                                                     placeholder="Add notes"
                                                     className="resize-none"
                                                     {...field}

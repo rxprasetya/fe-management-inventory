@@ -1,7 +1,7 @@
 import { DesktopNavbar, MobileNavbar } from './navbar'
-
 import ModeToggle from '../common/mode-toggle'
 import Profile from '../common/profile'
+import Logo from '../common/logo'
 
 const Header = () => {
     return (
@@ -11,7 +11,7 @@ const Header = () => {
                     <div className="inline-flex lg:hidden">
                         <MobileNavbar />
                     </div>
-                    <h1>Simpan.in</h1>
+                    <Logo />
                     <div className="flex items-center justify-center gap-2">
                         <ModeToggle />
                         <Profile />

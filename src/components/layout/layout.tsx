@@ -9,7 +9,7 @@ interface LayoutProps {
 const Layout = ({ children }: LayoutProps) => {
     return (
         <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
-            <section className="bg-accent w-full min-h-screen">
+            <section className="bg-accent w-full min-h-screen transition-all duration-300">
                 <Header />
                 <main className="container w-full mx-auto pt-16 pb-8 lg:pt-32 box-border px-2 lg:px-0">
                     {children}

@@ -1,4 +1,5 @@
 import DataTableActionButton from "@/components/layout/datatable/data-table-action-button"
+import { DataTableColumnHeader } from "@/components/layout/datatable/data-table-column-header"
 import DataTableSelectAll from "@/components/layout/datatable/data-table-select-all"
 import DataTableSelectRow from "@/components/layout/datatable/data-table-select-row"
 import type { Warehouse } from "@/features/warehouse/warehouse.schema"
@@ -18,12 +19,30 @@ export const WarehouseColumns: ColumnDef<Warehouse>[] = [
         enableHiding: false,
     },
     {
-        header: "No",
-        cell: (row) => row.row.index + 1
+        id: "No",
+        header: ({ column }) => {
+            return (
+                <DataTableColumnHeader column={column} title="No" />
+            )
+        },
+        accessorFn: (row, index) => index + 1,
+        cell: ({ getValue }) => getValue(),
     },
     {
         accessorKey: "name",
-        header: "Name",
+        header: ({ column }) => {
+            return (
+                <DataTableColumnHeader column={column} title="Name" />
+            )
+        }
+    },
+    {
+        accessorKey: "location",
+        header: ({ column }) => {
+            return (
+                <DataTableColumnHeader column={column} title="Location" />
+            )
+        }
     },
     {
         id: "actions",

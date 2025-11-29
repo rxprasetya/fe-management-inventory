@@ -50,7 +50,6 @@ const StockLevels = () => {
                             <DataTable
                                 data={stockLevels}
                                 columns={StockLevelColumns}
-                                filter="productName"
                                 nav="/stock-levels/form"
                             />
                     }

@@ -20,6 +20,7 @@ export const StockInColumns: ColumnDef<StockIn>[] = [
         enableHiding: false,
     },
     {
+        id: "refrenceCode",
         accessorKey: "refrenceCode",
         header: ({ column }) => {
             return (
@@ -28,21 +29,42 @@ export const StockInColumns: ColumnDef<StockIn>[] = [
         }
     },
     {
+        id: "date",
         accessorKey: "date",
-        header: "Date",
-        cell: ({ row }) => dayjs(row.original.date).format("DD MMMM YYYY")
+        accessorFn: (row) => dayjs(row.date).format("DD MMMM YYYY"),
+        header: ({ column }) => {
+            return (
+                <DataTableColumnHeader column={column} title="Date" />
+            )
+        },
+        cell: ({ getValue }) => getValue(),
     },
     {
+        id: "productName",
         accessorKey: "productName",
-        header: "Product",
+        header: ({ column }) => {
+            return (
+                <DataTableColumnHeader column={column} title="Product" />
+            )
+        }
     },
     {
+        id: "warehouseName",
         accessorKey: "warehouseName",
-        header: "Warehouse",
+        header: ({ column }) => {
+            return (
+                <DataTableColumnHeader column={column} title="Warehouse" />
+            )
+        }
     },
     {
+        id: "quantity",
         accessorKey: "quantity",
-        header: "Qty",
+        header: ({ column }) => {
+            return (
+                <DataTableColumnHeader column={column} title="Qty" />
+            )
+        }
     },
     {
         id: "actions",

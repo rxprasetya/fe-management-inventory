@@ -4,8 +4,10 @@ export const StockInSchema = z.object({
     id: z
         .string()
         .optional(),
-    date: z.iso
-        .datetime("Date is required"),
+    date: z
+        .date({
+            error: issue => issue.input === undefined ? "Date is required" : "Invalid date"
+        }),
     productID: z
         .string()
         .nonempty("Product is required"),

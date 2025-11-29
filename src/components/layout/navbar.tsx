@@ -2,6 +2,7 @@ import { Link, useLocation } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { Activity, CircleArrowDown, CircleArrowUp, House, LayoutDashboard, Menu, Package, Warehouse } from "lucide-react"
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
+import Logo from "../common/logo"
 
 const links = [
     {
@@ -77,8 +78,7 @@ export const MobileNavbar = () => {
                     <SheetDescription>
                     </SheetDescription>
                 </SheetHeader>
-                {/* <Logo /> */}
-                <h1>Simpan.in</h1>
+                <Logo />
                 <nav className="flex flex-col gap-4 text-center">
                     {links.map((link) => {
                         const isActive = link.path === "/" ? pathname === "/" : pathname.startsWith(link.path)

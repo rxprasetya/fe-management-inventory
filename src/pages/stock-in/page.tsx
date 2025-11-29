@@ -50,7 +50,6 @@ const StockInPage = () => {
                             <DataTable
                                 data={stockIn}
                                 columns={StockInColumns}
-                                filter="productName"
                                 nav="/stock-in/form"
                             />
                     }

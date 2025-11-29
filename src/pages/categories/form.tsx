@@ -78,10 +78,10 @@ const CategoryForm = () => {
                                     name="name"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel htmlFor="name">Name <span className="text-destructive">*</span></FormLabel>
+                                            <FormLabel htmlFor={field.name}>Name <span className="text-destructive">*</span></FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    id="name"
+                                                    id={field.name}
                                                     placeholder="Add name"
                                                     type="text"
                                                     autoComplete="off"
@@ -97,10 +97,10 @@ const CategoryForm = () => {
                                     name="description"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel htmlFor="description">Description</FormLabel>
+                                            <FormLabel htmlFor={field.name}>Description</FormLabel>
                                             <FormControl>
                                                 <Textarea
-                                                    id="description"
+                                                    id={field.name}
                                                     placeholder="Add description"
                                                     className="resize-none"
                                                     {...field}

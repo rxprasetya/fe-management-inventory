@@ -50,7 +50,6 @@ const StockOutPage = () => {
                             <DataTable
                                 data={stockOut}
                                 columns={StockOutColumns}
-                                filter="productName"
                                 nav="/stock-out/form"
                             />
                     }

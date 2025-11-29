@@ -19,14 +19,26 @@ export const StockLevelColumns: ColumnDef<StockLevel>[] = [
         enableHiding: false,
     },
     {
-        header: "No",
-        cell: (row) => row.row.index + 1
+        id: "No",
+        header: ({ column }) => {
+            return (
+                <DataTableColumnHeader column={column} title="No" />
+            )
+        },
+        accessorFn: (row, index) => index + 1,
+        cell: ({ getValue }) => getValue(),
     },
     {
+        id: "productName",
         accessorKey: "productName",
-        header: "Product",
+        header: ({ column }) => {
+            return (
+                <DataTableColumnHeader column={column} title="Product" />
+            )
+        }
     },
     {
+        id: "warehouse",
         accessorKey: "warehouseName",
         header: ({ column }) => {
             return (
@@ -35,8 +47,13 @@ export const StockLevelColumns: ColumnDef<StockLevel>[] = [
         }
     },
     {
+        id: "quantity",
         accessorKey: "quantity",
-        header: "Qty",
+        header: ({ column }) => {
+            return (
+                <DataTableColumnHeader column={column} title="Qty" />
+            )
+        }
     },
     {
         id: "actions",
@@ -47,7 +64,6 @@ export const StockLevelColumns: ColumnDef<StockLevel>[] = [
                     id={stockLevel.id!}
                     mutationFn={deleteStockLevel}
                     queryKey={["stock-levels"]}
-                    redirectTo={`/stock-levels/form/${stockLevel.id}`}
                 />
             )
         }

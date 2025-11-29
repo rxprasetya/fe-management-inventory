@@ -92,10 +92,10 @@ const StockLevelForm = () => {
                                     name="productID"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel htmlFor="productID">Product <span className="text-destructive">*</span></FormLabel>
+                                            <FormLabel htmlFor={field.name}>Product <span className="text-destructive">*</span></FormLabel>
                                             <Select value={field.value} onValueChange={field.onChange}>
                                                 <FormControl>
-                                                    <SelectTrigger id="productID">
+                                                    <SelectTrigger id={field.name}>
                                                         <SelectValue placeholder="Select a product" />
                                                     </SelectTrigger>
                                                 </FormControl>
@@ -116,10 +116,10 @@ const StockLevelForm = () => {
                                     name="warehouseID"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel htmlFor="warehouseID">Warehouse <span className="text-destructive">*</span></FormLabel>
+                                            <FormLabel htmlFor={field.name}>Warehouse <span className="text-destructive">*</span></FormLabel>
                                             <Select value={field.value} onValueChange={field.onChange}>
                                                 <FormControl>
-                                                    <SelectTrigger id="warehouseID">
+                                                    <SelectTrigger id={field.name}>
                                                         <SelectValue placeholder="Select a warehouse" />
                                                     </SelectTrigger>
                                                 </FormControl>
@@ -140,10 +140,10 @@ const StockLevelForm = () => {
                                     name="quantity"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel htmlFor="quantity">Quantity <span className="text-destructive">*</span></FormLabel>
+                                            <FormLabel htmlFor={field.name}>Quantity <span className="text-destructive">*</span></FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    id="quantity"
+                                                    id={field.name}
                                                     placeholder="Add quantity"
                                                     type="number"
                                                     min={0}

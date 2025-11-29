@@ -14,9 +14,9 @@ export const getProductInStocks = async (): Promise<ApiResponse<InventoryProduct
     }
 }
 
-export const getWarehouseInStocks = async (): Promise<ApiResponse<InventoryWarehouse[]>> => {
+export const getWarehouseInStocksByProductId = async (productID: string): Promise<ApiResponse<InventoryWarehouse[]>> => {
     try {
-        const res = await api.get(`${endpoint}/warehouses`)
+        const res = await api.get(`${endpoint}/warehouses/${productID}`)
         return res.data
     } catch (error) {
         throw msgError(error)
