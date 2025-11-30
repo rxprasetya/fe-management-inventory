@@ -93,7 +93,7 @@ const StockInForm = () => {
     return (
         <MainHeader
             title="Stock In Form"
-            desc="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quas laudantium voluptatibus neque consectetur, animi quis!"
+            desc="This form is used to record new incoming stock. Enter product details, quantities, and other relevant information to ensure every stock arrival is properly documented and reflected in your inventory."
             children={
                 loadProducts || loadStockIn ?
                     <StockInFormSkeleton />
@@ -107,7 +107,7 @@ const StockInForm = () => {
                                     name="refrenceCode"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel htmlFor={field.name}>Refrence Code <span className="text-destructive">*</span></FormLabel>
+                                            <FormLabel htmlFor={field.name}>Reference Code <span className="text-destructive">*</span></FormLabel>
                                             <FormControl>
                                                 <Input
                                                     id={field.name}

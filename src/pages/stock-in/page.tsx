@@ -33,7 +33,7 @@ const StockInPage = () => {
     return (
         <MainHeader
             title="Stock In"
-            desc="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aspernatur, libero quod nam iure tempora architecto tempore quae blanditiis error velit harum ut? Eligendi consequuntur facilis fugiat beatae rem unde facere."
+            desc="Manage and review all incoming stock entries with accurate and organized tracking. This page allows you to record product arrivals, verify quantities, and keep inventory data consistently up to date."
             breadcrumbs={[
                 { label: "Stock In" }
             ]}

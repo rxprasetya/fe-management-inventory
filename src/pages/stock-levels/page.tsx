@@ -33,7 +33,7 @@ const StockLevels = () => {
     return (
         <MainHeader
             title="Stock"
-            desc="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aspernatur, libero quod nam iure tempora architecto tempore quae blanditiis error velit harum ut? Eligendi consequuntur facilis fugiat beatae rem unde facere."
+            desc="Monitor current inventory levels with a clear and detailed overview of each product’s availability. This page helps you ensure stock is sufficient, detect low-stock items early, and maintain smooth operations."
             breadcrumbs={[
                 { label: "Stock" }
             ]}

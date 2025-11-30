@@ -33,7 +33,7 @@ const StockOutPage = () => {
     return (
         <MainHeader
             title="Stock Out"
-            desc="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aspernatur, libero quod nam iure tempora architecto tempore quae blanditiis error velit harum ut? Eligendi consequuntur facilis fugiat beatae rem unde facere."
+            desc="Track all outgoing stock movements with precise documentation. Use this page to monitor product usage, sales-related deductions, and prevent discrepancies in inventory records."
             breadcrumbs={[
                 { label: "Stock Out" }
             ]}

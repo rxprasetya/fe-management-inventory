@@ -79,7 +79,7 @@ const DataTableActionButton = <TData,>({
                         <AlertDialogHeader>
                             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                             <AlertDialogDescription>
-                                This action cannot be undone. This will permanently delete and remove your data from our servers.
+                                This action cannot be undone. This will permanently delete the data.
                             </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>

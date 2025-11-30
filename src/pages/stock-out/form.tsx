@@ -92,7 +92,7 @@ const StockOutForm = () => {
     return (
         <MainHeader
             title="Stock In Form"
-            desc="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quas laudantium voluptatibus neque consectetur, animi quis!"
+            desc="This form helps you document items that are taken out from inventory. Fill in product information, quantities, and reasons for stock removal to maintain accurate and traceable stock-out records."
             children={
                 loadProducts || loadStockOut ?
                     <StockOutFormSkeleton />
@@ -106,7 +106,7 @@ const StockOutForm = () => {
                                     name="refrenceCode"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel htmlFor={field.name}>Refrence Code <span className="text-destructive">*</span></FormLabel>
+                                            <FormLabel htmlFor={field.name}>Reference Code <span className="text-destructive">*</span></FormLabel>
                                             <FormControl>
                                                 <Input
                                                     id={field.name}

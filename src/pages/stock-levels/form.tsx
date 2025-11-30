@@ -78,7 +78,7 @@ const StockLevelForm = () => {
     return (
         <MainHeader
             title="Stock Form"
-            desc="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quas laudantium voluptatibus neque consectetur, animi quis!"
+            desc="This form allows you to view and manage the current quantity of each product in your inventory. Use it to verify stock levels, update adjustments, and ensure all product data remains accurate and up to date."
             children={
                 loadProducts || loadWarehouses || loadStockLevels ?
                     <StockLevelFormSkeleton />
