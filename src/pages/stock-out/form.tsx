@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import type { ApiError, ApiResponse } from "@/types/api"
 import PageAlert from "@/components/common/page-alert"
-import { useResponseMessageStore } from "@/store/use-store"
+import { useAuthStore, useResponseMessageStore } from "@/store/use-store"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
@@ -25,6 +25,10 @@ import { Skeleton } from "@/components/common/skeleton"
 
 const StockOutForm = () => {
     const { id } = useParams<{ id: string }>()
+
+    const { user } = useAuthStore()
+
+    console.log(user);
 
     const { setResponseMessage } = useResponseMessageStore()
 
@@ -148,8 +152,11 @@ const StockOutForm = () => {
                                                         mode="single"
                                                         selected={field.value}
                                                         onSelect={field.onChange}
-                                                        disabled={(date) =>
-                                                            date < new Date(new Date().setHours(0, 0, 0, 0))
+                                                        disabled={
+                                                            user.role === "admin" ?
+                                                                false
+                                                                :
+                                                                (date) => date < new Date(new Date().setHours(0, 0, 0, 0))
                                                         }
                                                         autoFocus
                                                     />

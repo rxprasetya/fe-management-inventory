@@ -6,7 +6,7 @@ import { Navigate } from "react-router-dom"
 
 const PublicRoute = ({ children }: { children: ReactNode }) => {
 
-    const { data: user, isLoading } = useAppQuery<User>({
+    const { data: users, isLoading } = useAppQuery<User>({
         queryKey: ["users"],
         queryFn: CheckAuth,
         retry: false,
@@ -15,7 +15,7 @@ const PublicRoute = ({ children }: { children: ReactNode }) => {
 
     if (isLoading) return <>Loading...</>
 
-    if (user?.username && user?.role) return <Navigate to="/" replace />
+    if (users?.username && users?.role) return <Navigate to="/" replace />
 
     return children
 }

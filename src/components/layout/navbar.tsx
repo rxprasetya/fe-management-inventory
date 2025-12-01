@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button"
 import { Activity, CircleArrowDown, CircleArrowUp, House, LayoutDashboard, Menu, Package, Warehouse } from "lucide-react"
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import Logo from "../common/logo"
+import { useNotificationStore } from "@/store/use-store"
+import NotificationBadge from "../common/notification-badge"
 
 const links = [
     {
@@ -44,6 +46,7 @@ const links = [
 
 export const DesktopNavbar = () => {
     const pathname = useLocation().pathname
+    const { notification } = useNotificationStore()
     return (
         <section className="flex items-center gap-2">
             {
@@ -51,7 +54,12 @@ export const DesktopNavbar = () => {
                     const isActive = link.path === "/" ? pathname === "/" : pathname.startsWith(link.path)
                     return (
                         <Link to={link.path} key={link.path} className={`border-b-2 ${isActive ? "border-primary" : "border-transparent"} py-1 transition-all duration-300`}>
-                            <Button variant={`link`} className={`capitalize ${isActive && "text-black dark:text-white"} transition-all duration-300`}>
+                            <Button variant={`link`} className={`relative capitalize ${isActive && "text-black dark:text-white"} transition-all duration-300`}>
+                                {
+                                    notification.length > 0 &&
+                                    link.path === "/stock-levels" &&
+                                    <NotificationBadge />
+                                }
                                 {link.icon}
                                 <span>{link.name}</span>
                             </Button>
@@ -65,10 +73,12 @@ export const DesktopNavbar = () => {
 
 export const MobileNavbar = () => {
     const pathname = useLocation().pathname
+    const { notification } = useNotificationStore()
     return (
         <Sheet>
             <SheetTrigger asChild>
-                <Button variant={`link`} size={`icon-lg`} className="py-0">
+                <Button variant={`link`} size={`icon-lg`} className="relative py-0">
+                    <div className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full" />
                     <Menu className="size-4.5" />
                 </Button>
             </SheetTrigger>
@@ -84,7 +94,13 @@ export const MobileNavbar = () => {
                         const isActive = link.path === "/" ? pathname === "/" : pathname.startsWith(link.path)
                         return (
                             <Link to={link.path} key={link.path} className={`border-b-2 ${isActive ? "border-primary" : "border-transparent"} py-1 transition-all duration-300`}>
-                                <Button variant={`link`} className={`capitalize ${isActive && "text-black dark:text-white"} transition-all duration-300`}>
+                                <Button variant={`link`} className={`relative capitalize ${isActive && "text-black dark:text-white"} transition-all duration-300`}>
+                                    {
+                                        notification.length > 0 &&
+                                        link.path === "/stock-levels" &&
+
+                                        <div className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full" />
+                                    }
                                     {link.icon}
                                     <span>{link.name}</span>
                                 </Button>
@@ -93,6 +109,6 @@ export const MobileNavbar = () => {
                     })}
                 </nav>
             </SheetContent>
-        </Sheet>
+        </Sheet >
     )
 }

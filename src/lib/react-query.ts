@@ -7,8 +7,8 @@ export const useAppQuery = <TData = unknown, TError = ApiError>({
     queryFn,
     ...options
 }: UseQueryOptions<ApiResponse<TData>, TError> & {
-    queryKey: string[];
-    queryFn: () => Promise<ApiResponse<TData>>;
+    queryKey: string[]
+    queryFn: () => Promise<ApiResponse<TData>>
 }) => {
     const {
         data,
@@ -23,7 +23,7 @@ export const useAppQuery = <TData = unknown, TError = ApiError>({
         queryKey,
         queryFn,
         ...options,
-    });
+    })
 
     return {
         data: data?.data,
@@ -36,8 +36,8 @@ export const useAppQuery = <TData = unknown, TError = ApiError>({
         isFetching,
         isSuccess,
         status,
-    };
-};
+    }
+}
 
 export const useAppMutation = <
     TData = unknown,
@@ -51,12 +51,12 @@ export const useAppMutation = <
     onSuccess,
     ...options
 }: UseMutationOptions<TData, TError, TVariables, TContext> & {
-    mutationFn: (variables: TVariables) => Promise<TData>;
-    redirectTo?: string;
-    queryKey?: string[];
+    mutationFn: (variables: TVariables) => Promise<TData>
+    redirectTo?: string
+    queryKey?: string[]
 }) => {
-    const navigate = useNavigate();
-    const queryClient = useQueryClient();
+    const navigate = useNavigate()
+    const queryClient = useQueryClient()
 
     const {
         mutate,
@@ -76,13 +76,15 @@ export const useAppMutation = <
                 onSuccess(data, variables, onMutateResult, context)
             }
 
-            if (queryKey) queryClient.invalidateQueries({ queryKey });
+            if (queryKey) queryClient.invalidateQueries({ queryKey })
 
-            if (redirectTo) navigate(redirectTo);
+            if (queryKey?.[0] === "stock-in" || queryKey?.[0] === "stock-out") queryClient.invalidateQueries({ queryKey: ["notifications"] })
+
+            if (redirectTo) navigate(redirectTo)
 
         },
         ...options,
-    });
+    })
 
     return {
         mutate,
@@ -94,5 +96,5 @@ export const useAppMutation = <
         data,
         reset,
         status,
-    };
-};
+    }
+}

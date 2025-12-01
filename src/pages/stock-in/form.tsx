@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import type { ApiError, ApiResponse } from "@/types/api"
 import PageAlert from "@/components/common/page-alert"
-import { useResponseMessageStore } from "@/store/use-store"
+import { useAuthStore, useResponseMessageStore } from "@/store/use-store"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { StockInSchema, type StockIn } from "@/features/stock-in/stock-in.schema"
 import { createStockIn, getStockInById, updateStockIn } from "@/features/stock-in/stock-in.service"
@@ -26,6 +26,8 @@ import { Skeleton } from "@/components/common/skeleton"
 const StockInForm = () => {
 
     const { id } = useParams<{ id: string }>()
+
+    const { user } = useAuthStore()
 
     const { setResponseMessage } = useResponseMessageStore()
 
@@ -149,8 +151,11 @@ const StockInForm = () => {
                                                         mode="single"
                                                         selected={field.value}
                                                         onSelect={field.onChange}
-                                                        disabled={(date) =>
-                                                            date < new Date(new Date().setHours(0, 0, 0, 0))
+                                                        disabled={
+                                                            user.role === "admin" ?
+                                                                false
+                                                                :
+                                                                (date) => date < new Date(new Date().setHours(0, 0, 0, 0))
                                                         }
                                                         autoFocus
                                                     />

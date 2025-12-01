@@ -7,3 +7,7 @@ export type InventoryWarehouse = {
     warehouseID: string
     warehouseName: string
 }
+
+export type InventoryNotification = {
+    id: string
+}

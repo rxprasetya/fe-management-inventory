@@ -25,7 +25,7 @@ export const CategoryColumns: ColumnDef<Category>[] = [
                 <DataTableColumnHeader column={column} title="No" />
             )
         },
-        accessorFn: (row, index) => index + 1,
+        accessorFn: (_row, index) => index + 1,
         cell: ({ getValue }) => getValue(),
     },
     {
