@@ -17,6 +17,7 @@ import PageAlert from "@/components/common/page-alert"
 import type { ApiError, ApiResponse } from "@/types/api"
 
 const Authorization = () => {
+
     const navigate = useNavigate()
     const [showPassword, setShowPassword] = useState<boolean>(false)
 

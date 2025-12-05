@@ -19,7 +19,7 @@ const ProtectedRoute = ({ children }: { children: ReactNode }) => {
         retry: false,
     })
 
-    if (isLoading) return
+    if (isLoading) return <>Loading...</>
 
     if (!users?.username && !users?.role) return <Navigate to={`/sign-in`} replace />
 

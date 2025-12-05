@@ -10,13 +10,13 @@ import ProductForm from "./pages/products/form"
 import WarehouseForm from "./pages/warehouses/form"
 import Authorization from "./pages/auth/page"
 import ProtectedRoute from "./components/common/protected-route"
-import PublicRoute from "./components/common/public-route"
 import StockLevels from "./pages/stock-levels/page"
 import StockLevelForm from "./pages/stock-levels/form"
 import StockInPage from "./pages/stock-in/page"
 import StockInForm from "./pages/stock-in/form"
 import StockOutPage from "./pages/stock-out/page"
 import StockOutForm from "./pages/stock-out/form"
+import PublicRoute from "./components/common/public-route"
 
 const links = [
     {
@@ -116,7 +116,7 @@ const links = [
     },
 ]
 
-function App() {
+const App = () => {
     return (
         <Routes>
             <Route path="/sign-in" element={

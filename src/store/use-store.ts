@@ -2,6 +2,7 @@ import type { User } from "@/features/auth/auth.type"
 import type { InventoryNotification } from "@/features/inventory/inventories.type"
 import type { ApiError } from "@/types/api"
 import { create } from "zustand"
+import { persist } from "zustand/middleware"
 
 type BulkStore = {
     selectedIds: string[]
@@ -51,21 +52,28 @@ export const useAuthStore = create<{
     user: User,
     setUser: (res: User) => void,
     clearUser: () => void
-}>((set) => ({
-    user: {
-        username: "",
-        role: ""
-    },
-    setUser: (res) => set({
-        user: {
-            username: res.username,
-            role: res.role
+}, [["zustand/persist", unknown]]>(
+    persist(
+        (set) => ({
+            user: {
+                username: "",
+                role: ""
+            },
+            setUser: (res) => set({
+                user: {
+                    username: res.username,
+                    role: res.role
+                }
+            }),
+            clearUser: () => set({
+                user: {
+                    username: "",
+                    role: ""
+                },
+            })
+        }),
+        {
+            name: "auth-storage"
         }
-    }),
-    clearUser: () => set({
-        user: {
-            username: "",
-            role: ""
-        },
-    })
-}))
+    )
+)
