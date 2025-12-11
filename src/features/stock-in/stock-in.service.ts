@@ -14,6 +14,15 @@ export const getStockIn = async (): Promise<ApiResponse<StockIn[]>> => {
     }
 }
 
+export const getStockInWithoutStockOut = async (): Promise<ApiResponse<StockIn[]>> => {
+    try {
+        const res = await api.get(`${endpoint}/available`)
+        return res.data
+    } catch (error) {
+        throw msgError(error)
+    }
+}
+
 export const getStockInById = async (id: string): Promise<ApiResponse<StockIn[]>> => {
     try {
         const res = await api.get(`${endpoint}/${id}`)

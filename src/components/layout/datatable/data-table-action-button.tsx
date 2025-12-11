@@ -4,12 +4,14 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
-import { useAppMutation } from "@/lib/react-query"
+import type { StockIn } from "@/features/stock-in/stock-in.schema"
+import { getStockInWithoutStockOut } from "@/features/stock-in/stock-in.service"
+import { useAppMutation, useAppQuery } from "@/lib/react-query"
 import { useNotificationStore, useResponseMessageStore } from "@/store/use-store"
 import type { ApiError, ApiResponse } from "@/types/api"
 import { CircleAlert, MoreHorizontal, Trash2 } from "lucide-react"
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 
 const DataTableActionButton = <TData,>({
     id,
@@ -23,6 +25,7 @@ const DataTableActionButton = <TData,>({
     queryKey?: string[]
 }) => {
 
+    const pathname = useLocation().pathname
     const navigate = useNavigate()
 
     const [open, setOpen] = useState<boolean>(false)
@@ -40,6 +43,11 @@ const DataTableActionButton = <TData,>({
                 success: data.success
             })
         }
+    })
+
+    const { data: stockIn = [] } = useAppQuery<StockIn[]>({
+        queryKey: ["stock-in", "available"],
+        queryFn: getStockInWithoutStockOut
     })
 
     return (
@@ -63,10 +71,18 @@ const DataTableActionButton = <TData,>({
                     <DropdownMenuContent>
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        {redirectTo &&
+                        {redirectTo && pathname !== "/stock-in" ?
                             <DropdownMenuItem onClick={() => navigate(redirectTo)}>
                                 Update
                             </DropdownMenuItem>
+                            :
+                            redirectTo && stockIn
+                                .filter((stock) => stock.id === id)
+                                .map((stock) =>
+                                    <DropdownMenuItem key={stock.id} onClick={() => navigate(redirectTo)}>
+                                        Update
+                                    </DropdownMenuItem>
+                                )
                         }
                         <DropdownMenuItem variant='destructive' onClick={() => setOpen(prev => !prev)}>
                             Delete
